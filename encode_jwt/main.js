@@ -5,7 +5,7 @@ const data = {
   name: 'John Doe',
   iat: 1516239022,
   role:'GUEST_USER',
-  username:'", \"*'
+  username:'Leonardo'
 };
 const jwt = sign(data, secret);
 console.log(jwt);
