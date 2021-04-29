@@ -38,7 +38,7 @@ const generatePolicy = (principalId, methodArn, username, role) => {
     case 'GUEST_USER':
       allowedResources.push("arn:aws:execute-api:*:*:*/test/*");
       allowedResources.push("arn:aws:execute-api:*:*:*/guest/hello");
-      allowedResources.push("arn:aws:execute-api:*:*:*/foo/bar/get");
+      allowedResources.push("arn:aws:execute-api:*:*:*/foo/bar/GET");
       break;
     default:
       break;

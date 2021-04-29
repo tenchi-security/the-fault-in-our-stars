@@ -4,7 +4,7 @@ export default {
     {
       http: {
         method: 'get',
-        path: 'foo/bar/GET',
+        path: 'foo/bar/get',
         cors: true,
       }
     }
