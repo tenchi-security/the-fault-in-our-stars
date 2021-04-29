@@ -6,7 +6,7 @@ const serverlessConfiguration: AWS = {
   frameworkVersion: '2',
   custom: {
     dynamodb: {
-      stages: 'dev',
+      stages: ['dev', 'qa'],
       start: {
         port: 8000,
         inMemory: false,
