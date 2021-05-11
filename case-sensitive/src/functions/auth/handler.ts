@@ -15,11 +15,11 @@ const authorize: APIGatewayProxyEvent = async (event) => {
     const token = event.authorizationToken.split(' ')[1];
     const decodedToken = jwt_decode(token)
     console.log(`LOG:::decoded`, decodedToken)
-    const data = decodedToken;
+    const user = decodedToken;
 
-    const policy = generatePolicy(data.sub, event.methodArn, data.username, data.role);
+    const policy = generatePolicy(user.sub, user.role);
     console.log(`LOG:::Generated Policy`, policy)
-    return JSON.parse(policy);
+    return policy;
 
   } catch (err) {
     console.error(`Error on console`, err);
@@ -27,47 +27,36 @@ const authorize: APIGatewayProxyEvent = async (event) => {
   }
 }
 
-const generatePolicy = (principalId, methodArn, username, role) => {
+const generatePolicy = (principalId, role) => {
 
   const allowedResources = [];
 
   switch (role.toUpperCase()) {
     case 'ADMIN':
-      allowedResources.push(`arn:aws:execute-api:us-east-1:*:*/*`);
+      allowedResources.push(`arn:aws:execute-api:*:*:*/*`);
       break;
     case 'GUEST_USER':
-      allowedResources.push("arn:aws:execute-api:*:*:*/test/*");
-      allowedResources.push("arn:aws:execute-api:*:*:*/guest/hello");
-      allowedResources.push("arn:aws:execute-api:*:*:*/foo/bar/GET");
+      allowedResources.push("arn:aws:execute-api:*:*:*/foo/uppercase");
+      allowedResources.push("arn:aws:execute-api:*:*:*/foo/LOWERCASE");
       break;
     default:
       break;
   }
 
-  let strAllowedResources = '';
-  allowedResources.forEach((value) => {
-    if (!strAllowedResources.startsWith('"')) {
-      strAllowedResources = '"' + strAllowedResources + value + '","';
-    } else {
-      strAllowedResources = strAllowedResources + value + '","';
-    }
-  })
-
-  strAllowedResources = strAllowedResources.substring(0, strAllowedResources.length - 2);
-  return `
-  {
-    "principalId":"${principalId}",
-    "policyDocument": {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": "execute-api:Invoke",
-        "Effect": "Allow",
-        "Resource": [` + strAllowedResources + `]
-        }
-      ]
-    }
-  }`;
+  return {
+    principalId: principalId,
+    policyDocument: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Action: "execute-api:Invoke",
+          Effect: "Allow",
+          Resource: [
+            ...allowedResources,
+          ]
+        }],
+    },
+  };
 };
 
 export const main = middyfy(authorize);

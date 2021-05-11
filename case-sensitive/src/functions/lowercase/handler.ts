@@ -5,10 +5,10 @@ import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
 
-const guestHello: ValidatedEventAPIGatewayProxyEvent = async (event) => {
+const helloLowercase: ValidatedEventAPIGatewayProxyEvent = async (event) => {
   return formatJSONResponse({
-    message: `Hello world Guest!`,
+    message: `Hello lowercase!`,
   });
 }
 
-export const main = middyfy(guestHello);
+export const main = middyfy(helloLowercase);

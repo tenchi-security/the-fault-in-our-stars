@@ -1,5 +1,5 @@
 import type { AWS } from '@serverless/typescript';
-import {  auth, foobarGET } from './src/functions';
+import {  auth, uppercase, lowercase } from './src/functions';
 
 
 const serverlessConfiguration: AWS = {
@@ -24,7 +24,7 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { auth, foobarGET },
+  functions: { auth, uppercase, lowercase },
   resources:{
     Resources:{
       GatewayResponse: {
