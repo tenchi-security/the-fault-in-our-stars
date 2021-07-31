@@ -4,7 +4,7 @@ export default {
     {
       http: {
         method: 'get',
-        path: 'foo/UPPERCASE',
+        path: 'foo/lowerCASE',
         cors: true,
         authorizer: 'auth',
       }

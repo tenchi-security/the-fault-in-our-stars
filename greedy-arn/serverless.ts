@@ -24,9 +24,9 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { auth,adminHello, guestHello, adminTestHello },
-  resources:{
-    Resources:{
+  functions: { auth, adminHello, guestHello, adminTestHello },
+  resources: {
+    Resources: {
       GatewayResponse: {
         Type: "AWS::ApiGateway::GatewayResponse",
         Properties: {

@@ -6,6 +6,7 @@ export default {
         method: 'get',
         path: 'foo/lowercase',
         cors: true,
+        authorizer: 'auth',
       }
     }
   ]

@@ -1,11 +1,11 @@
 const sign = require('jwt-encode');
-const secret = 'secret';
+const secret = 'supersecretkey';
 const data = {
   sub: '1234567890',
-  name: 'John Doe',
+  name: 'Viveiros, L',
   iat: 1516239022,
-  role:'GUEST_USER',
-  username:'*'
+  role:'USER',
+  username:'lviveiros'
 };
 const jwt = sign(data, secret);
 console.log(jwt);

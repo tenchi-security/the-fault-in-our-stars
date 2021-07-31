@@ -4,11 +4,13 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "servlerss.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sls offline start"
   },
   "dependencies": {
     "@middy/core": "^1.5.0",
     "@middy/http-json-body-parser": "^1.5.0",
+    "jsonwebtoken": "^8.5.1",
     "serverless-offline": "^6.9.0",
     "source-map-support": "^0.5.19"
   },

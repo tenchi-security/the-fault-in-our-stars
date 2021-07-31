@@ -1,72 +1,63 @@
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import jwt_decode from 'jwt-decode';
+import jwt from 'jsonwebtoken';
 import 'source-map-support/register';
 
-
-const authorize: APIGatewayProxyEvent = async (event) => {
+//@ts-ignore
+const authorize: APIGatewayProxyEvent = async (event: any) => {
   console.log(`LOG:::event.authorizationToken`, event.authorizationToken)
   if (!event.authorizationToken) {
     return formatJSONResponse({ message: `Unauthorized` }, 401);
   }
 
   try {
-    const token = event.authorizationToken.split(' ')[1];
-    const decodedToken = jwt_decode(token)
-    console.log(`LOG:::decoded`, decodedToken)
+    const authHeader = event.authorizationToken;
+    if (!authHeader.startsWith('Bearer ')) {
+      throw Error
+    }
+    const token = authHeader.substring(7, authHeader.length)
+    const decodedToken = jwt.verify(token, `supersecretkey`)
     const data = decodedToken;
 
-    const policy = generatePolicy(data.sub, event.methodArn, data.username, data.role);
-    console.log(`LOG:::Generated Policy`, policy)
-    return JSON.parse(policy);
+    return generatePolicy(data.sub, event.methodArn, data.role);
 
   } catch (err) {
-    console.error(`Error on console`, err);
+    console.error(`Error on Auth`, err);
     return formatJSONResponse({ message: `Unauthorized` }, 401);
   }
 }
 
-const generatePolicy = (principalId, methodArn, username, role) => {
+const generatePolicy = (principalId: string, methodArn: string, role: string) => {
 
   const allowedResources = [];
+  const baseArn = methodArn.split(`/`, 2).join('/');
 
   switch (role.toUpperCase()) {
     case 'ADMIN':
-      allowedResources.push(`arn:aws:execute-api:us-east-1:*:*/*`);
+      allowedResources.push(`${baseArn}/*/*`)
       break;
-    case 'GUEST_USER':
-      allowedResources.push("arn:aws:execute-api:*:*:*/test/*");
-      allowedResources.push("arn:aws:execute-api:*:*:*/guest/hello");
+    case 'USER':
+      allowedResources.push(`${baseArn}/GET/*/test/`)
       break;
     default:
       break;
   }
-
-  let strAllowedResources = '';
-  allowedResources.forEach((value) => {
-    if (!strAllowedResources.startsWith('"')) {
-      strAllowedResources = '"' + strAllowedResources + value + '","';
-    } else {
-      strAllowedResources = strAllowedResources + value + '","';
-    }
-  })
-
-  strAllowedResources = strAllowedResources.substring(0, strAllowedResources.length - 2);
-  return `
-  {
-    "principalId":"${principalId}",
-    "policyDocument": {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": "execute-api:Invoke",
-        "Effect": "Allow",
-        "Resource": [` + strAllowedResources + `]
-        }
-      ]
-    }
-  }`;
+  const generatedPolicy = {
+    principalId: principalId,
+    policyDocument: {
+      Version: "2012-10-17",
+      Statement: [
+        {
+          Action: "execute-api:Invoke",
+          Effect: "Allow",
+          Resource: [
+            ...allowedResources,
+          ]
+        }],
+    },
+  };
+  return generatedPolicy;
 };
 
 export const main = middyfy(authorize);
