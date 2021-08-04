@@ -4,10 +4,11 @@ import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
-const adminHello: ValidatedEventAPIGatewayProxyEvent = async () => {
+//@ts-ignore
+const createAdminUser: ValidatedEventAPIGatewayProxyEvent = async () => {
   return formatJSONResponse({
-    message: `Hello Admin!`,
+    message: `Created Admin User!`,
   });
 }
 
-export const main = middyfy(adminHello);
+export const main = middyfy(createAdminUser);

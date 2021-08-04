@@ -31,6 +31,7 @@ const authorize: APIGatewayProxyEvent = async (event: any) => {
 const generatePolicy = (principalId: string, methodArn: string, role: string) => {
 
   const allowedResources = [];
+  //arn:aws:execute-api:region:account-id:api-id/stage-name/HTTP-method/resource-path
   const baseArn = methodArn.split(`/`, 2).join('/');
 
   switch (role.toUpperCase()) {
@@ -38,7 +39,7 @@ const generatePolicy = (principalId: string, methodArn: string, role: string) =>
       allowedResources.push(`${baseArn}/*/*`)
       break;
     case 'USER':
-      allowedResources.push(`${baseArn}/GET/*/test/`)
+      allowedResources.push(`${baseArn}/*/dashboard/*`)
       break;
     default:
       break;

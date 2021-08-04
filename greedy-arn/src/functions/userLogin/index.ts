@@ -3,9 +3,10 @@ export default {
   events: [
     {
       http: {
-        method: 'get',
-        path: 'guest/hello/',
+        method: 'post',
+        path: 'dashboard/user/login',
         cors: true,
+        authorizer: 'auth',
       }
     }
   ]

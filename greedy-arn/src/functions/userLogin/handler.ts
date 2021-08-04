@@ -4,10 +4,11 @@ import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 
-const adminTestHello: ValidatedEventAPIGatewayProxyEvent = async () => {
+//@ts-ignore
+const userLogin: ValidatedEventAPIGatewayProxyEvent = async (event) => {
   return formatJSONResponse({
-    message: `Hello Admin Test!`,
+    message: `User Logged In!`,
   });
 }
 
-export const main = middyfy(adminTestHello);
+export const main = middyfy(userLogin);

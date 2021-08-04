@@ -4,7 +4,7 @@ export default {
     {
       http: {
         method: 'get',
-        path: 'admin/test/hello/',
+        path: 'dashboard/user/{username}',
         cors: true,
         authorizer: 'auth',
       }

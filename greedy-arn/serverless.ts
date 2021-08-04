@@ -1,5 +1,15 @@
 import type { AWS } from '@serverless/typescript';
-import { adminHello, adminTestHello, auth, guestHello } from './src/functions';
+import {
+  auth,
+  userHello,
+  chargeCustomer,
+  createAdminUser,
+  getUser,
+  putUser,
+  deleteUser,
+  userLogin,
+  userLogout
+} from './src/functions';
 
 
 const serverlessConfiguration: AWS = {
@@ -24,7 +34,17 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { auth, adminHello, guestHello, adminTestHello },
+  functions: {
+    auth,
+    userHello,
+    chargeCustomer,
+    createAdminUser,
+    getUser,
+    putUser,
+    deleteUser,
+    userLogin,
+    userLogout
+  },
   resources: {
     Resources: {
       GatewayResponse: {

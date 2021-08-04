@@ -3,8 +3,8 @@ export default {
   events: [
     {
       http: {
-        method: 'get',
-        path: 'admin/hello/',
+        method: 'put',
+        path: 'dashboard/user/{username}',
         cors: true,
         authorizer: 'auth',
       }
