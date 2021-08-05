@@ -1,0 +1,16 @@
+
+Testing Endpoints
+
+  USER ENDPOINTS
+  GET - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/dashboard/user/some_user
+  GET - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/dashboard/user
+  PUT - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/dashboard/user/some_user
+  DELETE - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/dashboard/user/some_user
+  POST - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/dashboard/user/login
+  GET - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/dashboard/user/logout
+
+
+  ADMIN ENDPOINTS
+  POST - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/admin/store/order/creditcard/dashboard/
+  POST - https://qmrdkdeht8.execute-api.us-east-1.amazonaws.com/dev/admin/dashboard/createAdminUser
+

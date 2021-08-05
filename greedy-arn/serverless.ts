@@ -8,7 +8,8 @@ import {
   putUser,
   deleteUser,
   userLogin,
-  userLogout
+  userLogout,
+  testTrailingSlash
 } from './src/functions';
 
 
@@ -43,7 +44,8 @@ const serverlessConfiguration: AWS = {
     putUser,
     deleteUser,
     userLogin,
-    userLogout
+    userLogout,
+    testTrailingSlash
   },
   resources: {
     Resources: {

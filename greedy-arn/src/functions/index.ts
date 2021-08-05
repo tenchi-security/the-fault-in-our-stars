@@ -8,5 +8,7 @@ export { default as deleteUser } from './deleteUser';
 export { default as userLogin } from './userLogin';
 export { default as userLogout } from './userLogout';
 
+export { default as testTrailingSlash } from './testTrailingSlash';
+
 export { default as userHello } from './user';
 export { default as auth } from './auth';
